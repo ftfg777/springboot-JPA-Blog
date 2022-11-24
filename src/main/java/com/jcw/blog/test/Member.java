@@ -1,11 +1,17 @@
 package com.jcw.blog.test;
 
+import lombok.*;
+
+@Data
+@NoArgsConstructor
 public class Member {
+    // 데이터 베이스에서 가져오는 값을 넣어주기 때문에 데이터가 변경되지 않게 final로 잡아줌(불변성 유지)
     private int id;
     private String username;
     private String password;
     private String emailAddress;
 
+    @Builder
     public Member(int id, String username, String password, String emailAddress) {
         this.id = id;
         this.username = username;
@@ -21,37 +27,5 @@ public class Member {
                 ", password='" + password + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
                 '}';
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
     }
 }
