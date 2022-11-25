@@ -1,5 +1,6 @@
 package com.jcw.blog.model;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,6 +10,7 @@ import java.sql.Timestamp;
 
 // ORM -> Java(다른 언어) Object -> 테이블로 매핑
 @Entity //User Class가 Mysql에 테이블 생성됨
+@Getter
 public class User {
 
     @Id
