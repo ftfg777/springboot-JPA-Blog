@@ -1,14 +1,17 @@
 package com.jcw.blog.model;
 
-import lombok.Getter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
-@Getter
 public class Board {
 
     @Id
@@ -25,13 +28,10 @@ public class Board {
     private int count;      //조회수
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;      //DB는 오브젝트를 저장할 수 없음
 
     @CreationTimestamp      // insert 혹은 update 시간 자동 저장
     private Timestamp createDate;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
