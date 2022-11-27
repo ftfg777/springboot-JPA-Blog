@@ -4,6 +4,7 @@ import com.jcw.blog.model.User;
 import com.jcw.blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -82,6 +83,15 @@ public class DummyControllerTest {
         //더티체킹
         return user;
     }
+    @DeleteMapping("/dummy/user/{id}")
+    public String deleteUser(@PathVariable Long id){
+        try {
+            userRepository.deleteById(id);
+        }catch (EmptyResultDataAccessException e){
+            return "해당 id는 DB에 없습니다.";
+        }
+        return "삭제되었습니다. id=" + id;
+    }
 
-    
+
 }
