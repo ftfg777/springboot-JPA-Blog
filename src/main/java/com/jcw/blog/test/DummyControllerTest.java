@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,11 +57,31 @@ public class DummyControllerTest {
         return users;
     }
 
-
     @PostMapping("/dummy/join")
     public String join(User user){
         log.info(user.toString());
         userRepository.save(user);
         return "회원가입이 완료되었습니다.";
     }
+    @Transactional //함수 종료시에 자동 commit 됨
+    @PutMapping("/dummy/user/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User requestUser){
+        log.info("updateUser--------------------------------");
+        log.info("id: " + id);
+        log.info("password: " + requestUser.getPassword());
+        log.info("emailAddress: " + requestUser.getEmailAddress());
+
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalStateException("수정에 실패하였습니다"));
+        user.setPassword(requestUser.getPassword());
+        user.setEmailAddress(requestUser.getEmailAddress());
+
+        // save 함수는 id를 전달하면 해당 id에 대한 데이터가 있으면 update를 해줌
+        // save 함수는 id를 전달하면 해당 id에 대한 데이터가 없으면 insert를 해줌
+        // save 함수는 id를 전달하지 않으면 insert를 해줌
+
+        //더티체킹
+        return user;
+    }
+
+    
 }
