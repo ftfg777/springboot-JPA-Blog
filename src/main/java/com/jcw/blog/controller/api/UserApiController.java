@@ -27,7 +27,9 @@ public class UserApiController {
 
         userService.회원가입(user);
 
+        System.out.println("UserApiController save 끝");
         return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
+
     }
 
 

@@ -17,10 +17,13 @@ public class UserService {
 
     @Transactional
     public void 회원가입(User user){
+        System.out.println("UserService.회원가입 호출");
         String rawPassword = user.getPassword(); //원문
         String encPassword = passwordEncoder.encode(rawPassword); //해쉬
         user.setPassword(encPassword);
         userRepository.save(user);
+        System.out.println("UserService.회원가입 끝");
+
     }
 
 
