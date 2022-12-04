@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // 자동으로 bean 등록이 됨
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByUsernameAndPassword(String username, String password);
+//    User findByUsernameAndPassword(String username, String password);
 }

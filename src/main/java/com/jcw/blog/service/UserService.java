@@ -19,7 +19,4 @@ public class UserService {
     }
 
 
-    public User 로그인(User user) {
-        return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
-    }
 }
