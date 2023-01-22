@@ -17,9 +17,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @RestController
 public class UserApiController {
-
     private final UserService userService;
-
 
     @PostMapping("/auth/joinProc")
     public ResponseDto<Integer> save(@RequestBody User user){
