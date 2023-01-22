@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Transactional(readOnly = true) //select 할 때 트랜잭션 시작, 서비스 종료시에 트랜잭셩 종료(정합성 유지)
 @Service
@@ -23,5 +26,10 @@ public class BoardService {
         boardRepository.save(board);
 
         System.out.println("BoardService.글작성 끝");
+    }
+
+    public List<Board> 글목록() {
+        List<Board> boards = boardRepository.findAll();
+        return boards;
     }
 }
