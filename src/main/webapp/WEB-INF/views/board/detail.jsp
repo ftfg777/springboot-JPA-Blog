@@ -6,9 +6,16 @@
 <div class="container">
 
   <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
-  <button id="btn-update" class="btn btn-warning">수정</button>
-  <button id="btn-delete" class="btn btn-danger">삭제</button>
+  <c:if test="${board.user.id == principal.user.id}">
+    <button id="btn-board-update" class="btn btn-warning">수정</button>
+    <button id="btn-board-delete" class="btn btn-danger">삭제</button>
+  </c:if>
   <br><br>
+  <div>
+      글번호: <span id="id">${board.id}</span>
+      작성자: <span>${board.user.username}</span><span style="display: none;" id="writerId">${board.user.id}</span>
+      조회수: <span>${board.count}</span>
+  </div>
 
       <div class="form-group">
         <h3>${board.title}</h3>

@@ -3,6 +3,10 @@ let index = {
         $("#btn-board-save").on("click", () => {
             this.save();
         });
+        $("#btn-board-delete").on("click", () => {
+            this.deleteById();
+        });
+
     },
     save: function () {
         let data = {
@@ -22,28 +26,24 @@ let index = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+
+    deleteById: function () {
+        let id = $("#id").text();
+
+        $.ajax({
+            type: "DELETE",
+            url: "/api/board/" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).done(function (resp) {
+            alert("삭제가 완료되었습니다.");
+            console.log(resp);
+            location.href = "/";
+        }).fail(function (error) {
+            alert("삭제 실패");
+        });
     }
-
-    // login: function () {
-    //     let data = {
-    //         username: $("#username").val(),
-    //         password: $("#password").val()
-    //     };
-
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "/api/user/login",
-    //         data: JSON.stringify(data),
-    //         contentType: "application/json; charset=utf-8",
-    //         dataType: "json"
-    //     }).done(function (resp) {
-    //         alert("로그인이 완료되었습니다.");
-    //         console.log(resp);
-    //         location.href = "/";
-    //     }).fail(function (error) {
-    //         alert(JSON.stringify(error));
-    //     });
-    // }
 }
 
 

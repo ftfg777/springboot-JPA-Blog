@@ -40,4 +40,19 @@ public class BoardService {
         return boardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없습니다"));
     }
+
+    @Transactional
+    public void 글삭제(Long id, User user) {
+        Board deleteBoard = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("글 삭제 실패 : 삭제할 글이 없습니다."));
+
+        Long writerId = deleteBoard.getUser().getId();
+        Long userId = user.getId();
+
+        if(!writerId.equals(userId)){
+            throw new IllegalArgumentException("글 삭제 실패 : 해당 글을 삭제할 권한이 없습니다.");
+        }
+        boardRepository.delete(deleteBoard);
+    }
+
 }

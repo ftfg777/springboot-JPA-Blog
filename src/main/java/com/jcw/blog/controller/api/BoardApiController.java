@@ -9,9 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,6 +25,14 @@ public class BoardApiController {
 
         System.out.println("BoardApiController save 끝");
         return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
+    }
+    @DeleteMapping("/api/board/{id}")
+    public ResponseDto<Integer> delete(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetail principal){
+        System.out.println("BoardApiController delete 호출");
 
+        boardService.글삭제(id, principal.getUser());
+
+        System.out.println("BoardApiController delete 끝");
+        return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
     }
 }
