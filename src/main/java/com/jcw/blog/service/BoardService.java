@@ -4,6 +4,8 @@ import com.jcw.blog.model.Board;
 import com.jcw.blog.model.User;
 import com.jcw.blog.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +30,8 @@ public class BoardService {
         System.out.println("BoardService.글작성 끝");
     }
 
-    public List<Board> 글목록() {
-        List<Board> boards = boardRepository.findAll();
+    public Page<Board> 글목록(Pageable pageable) {
+        Page<Board> boards = boardRepository.findAll(pageable);
         return boards;
     }
 }
