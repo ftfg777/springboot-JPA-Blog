@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true) //select 할 때 트랜잭션 시작, 서비스 종료시에 트랜잭셩 종료(정합성 유지)
@@ -33,5 +34,10 @@ public class BoardService {
     public Page<Board> 글목록(Pageable pageable) {
         Page<Board> boards = boardRepository.findAll(pageable);
         return boards;
+    }
+
+    public Board 글상세보기(Long id) {
+        return boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없습니다"));
     }
 }
