@@ -35,4 +35,17 @@ public class BoardApiController {
         System.out.println("BoardApiController delete 끝");
         return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
     }
+
+    @PutMapping("/api/board/{id}")
+    public ResponseDto<Integer> update(@PathVariable Long id, @RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal){
+        System.out.println("BoardApiController put 호출");
+
+        boardService.글수정(id, board, principal.getUser());
+
+
+
+        System.out.println("BoardApiController put 끝");
+        return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
+
+    }
 }

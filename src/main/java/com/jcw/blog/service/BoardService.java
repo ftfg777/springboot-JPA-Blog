@@ -1,5 +1,6 @@
 package com.jcw.blog.service;
 
+import com.jcw.blog.auth.PrincipalDetail;
 import com.jcw.blog.model.Board;
 import com.jcw.blog.model.User;
 import com.jcw.blog.repository.BoardRepository;
@@ -9,9 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true) //select 할 때 트랜잭션 시작, 서비스 종료시에 트랜잭셩 종료(정합성 유지)
@@ -55,4 +54,17 @@ public class BoardService {
         boardRepository.delete(deleteBoard);
     }
 
+    @Transactional
+    public void 글수정(Long id, Board requestBoard, User user) {
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("글 수정 실패 : 수정할 글이 없습니다"));
+
+        if(!Objects.equals(board.getUser().getId(), user.getId())){
+            throw new IllegalArgumentException("글 수정 실패 : 해당 글을 수정할 권한이 없습니다.");
+        }
+
+        board.setTitle(requestBoard.getTitle());
+        board.setContent(requestBoard.getContent());
+        // 해당 함수 종료시(서비스가 종료될 때) 트랜잭션이 종료되면서 더티체킹으로 자동 업데이트가 됨 db flush
+    }
 }
