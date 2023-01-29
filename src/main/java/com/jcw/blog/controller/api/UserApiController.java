@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,16 @@ public class UserApiController {
         userService.회원가입(user);
 
         System.out.println("UserApiController save 끝");
+        return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
+    }
+
+    @PutMapping("/user")
+    public ResponseDto<Integer> update(@RequestBody User user){
+        System.out.println("UserApiController update 호출");
+
+        userService.회원수정(user);
+
+        System.out.println("UserApiController update 끝");
         return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
 
     }
