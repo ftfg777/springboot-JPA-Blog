@@ -1,5 +1,6 @@
 package com.jcw.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -20,9 +21,11 @@ public class Reply {
     @Column(nullable = false, length = 200)
     private String content;
 
+
     @ManyToOne
     @JoinColumn(name = "boardId")
     private Board board;
+
 
     @ManyToOne
     @JoinColumn(name = "userId")

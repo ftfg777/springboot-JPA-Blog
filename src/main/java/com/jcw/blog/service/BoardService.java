@@ -32,6 +32,7 @@ public class BoardService {
 
     public Page<Board> 글목록(Pageable pageable) {
         Page<Board> boards = boardRepository.findAll(pageable);
+
         return boards;
     }
 
