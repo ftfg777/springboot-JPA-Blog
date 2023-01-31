@@ -21,7 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //프로젝트에서 연결된 DB의 넘버링 전략을 따라감
     private Long id; //시퀀스, auto_increment
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 100)
     private String username;
 
     @Column(nullable = false)
@@ -37,6 +37,7 @@ public class User {
     @CreationTimestamp //데이터가 insert 될 때 시간 자동 입력
     private Timestamp createDate;
 
+    private String oauth; //kakao, google 구분
 
     @Override
     public String toString() {
@@ -47,6 +48,7 @@ public class User {
                 ", emailAddress='" + emailAddress + '\'' +
                 ", role=" + role +
                 ", createDate=" + createDate +
+                ", oauth='" + oauth + '\'' +
                 '}';
     }
 }

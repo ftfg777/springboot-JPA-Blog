@@ -32,7 +32,9 @@ public class UserService {
         System.out.println("UserService.회원수정 시작");
         User userPS = userRepository.findById(user.getId())
                 .orElseThrow(() -> new IllegalStateException("회원 수정 실패: 회원을 찾을 수 없습니다"));
-        if(userPS != null){
+
+        // oauth에 값이 없으면 수정 가능
+        if(userPS != null && userPS.getOauth() == null || userPS.getOauth().equals("")){
             String rawPassword = user.getPassword(); //원문
             String encPassword = passwordEncoder.encode(rawPassword); //해쉬
 
@@ -40,5 +42,9 @@ public class UserService {
             userPS.setEmailAddress(user.getEmailAddress());
         }
         System.out.println("UserService.회원수정 끝"); // 함수 종료 = 서비스 종료 = 트랜잭션 종료 = 자동 커밋(변화감지 -> 더티체킹)
+    }
+
+    public User 회원찾기(String username) {
+        return userRepository.findByUsername(username).orElseGet(User::new);
     }
 }
