@@ -27,8 +27,9 @@
     
       <div class="card">
         <div>
-          <div class="card-body"><textarea class="form-control" rows="1"></textarea></div>
-          <div class="card-footer"><button class="btn btn-primary">등록</button></div>
+          <input type="hidden" id="boardId" value="${board.id}"/>
+          <div class="card-body"><textarea id="reply-content" class="form-control" rows="1"></textarea></div>
+          <div class="card-footer"><button id="btn-reply-save"class="btn btn-primary">등록</button></div>
         </div>
       </div>
       <br>
@@ -40,7 +41,7 @@
               <div>${replys.content}</div>
               <div class="d-flex">
                 <div class="font-italic">${replys.user.username} &nbsp;</div>
-                <button class="btn btn-danger badge">삭제</button>
+                <button type="button" class="btn btn-danger badge">삭제</button>
               </div>
             </li>
           </c:forEach>

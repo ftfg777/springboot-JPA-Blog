@@ -3,6 +3,7 @@ package com.jcw.blog.controller.api;
 import com.jcw.blog.auth.PrincipalDetail;
 import com.jcw.blog.dto.ResponseDto;
 import com.jcw.blog.model.Board;
+import com.jcw.blog.model.Reply;
 import com.jcw.blog.model.User;
 import com.jcw.blog.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,8 @@ public class BoardApiController {
         System.out.println("BoardApiController save 끝");
         return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
     }
+
+
     @DeleteMapping("/api/board/{id}")
     public ResponseDto<Integer> delete(@PathVariable Long id, @AuthenticationPrincipal PrincipalDetail principal){
         System.out.println("BoardApiController delete 호출");
@@ -46,6 +49,20 @@ public class BoardApiController {
 
         System.out.println("BoardApiController put 끝");
         return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
-
     }
+
+    @PostMapping("/api/board/{boardId}/reply")
+    public ResponseDto<Integer> replySave(@PathVariable Long boardId,
+                                          @RequestBody Reply reply,
+                                          @AuthenticationPrincipal PrincipalDetail principal){
+        System.out.println("BoardApiController replySave 호출");
+
+        boardService.댓글작성(principal.getUser(), boardId, reply);
+
+        System.out.println(reply.getContent());
+        System.out.println("BoardApiController replySave 끝");
+        return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
+    }
+
+
 }

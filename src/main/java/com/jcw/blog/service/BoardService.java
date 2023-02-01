@@ -2,8 +2,10 @@ package com.jcw.blog.service;
 
 import com.jcw.blog.auth.PrincipalDetail;
 import com.jcw.blog.model.Board;
+import com.jcw.blog.model.Reply;
 import com.jcw.blog.model.User;
 import com.jcw.blog.repository.BoardRepository;
+import com.jcw.blog.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,7 @@ import java.util.Objects;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
 
     @Transactional
     public void 글작성(Board board, User user) {
@@ -67,5 +70,17 @@ public class BoardService {
         board.setTitle(requestBoard.getTitle());
         board.setContent(requestBoard.getContent());
         // 해당 함수 종료시(서비스가 종료될 때) 트랜잭션이 종료되면서 더티체킹으로 자동 업데이트가 됨 db flush
+    }
+
+    @Transactional
+    public void 댓글작성(User user, Long boardId, Reply requestReply) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalStateException("댓글 작성 실패 : 게시글을 찾을 수 없습니다"));
+
+        requestReply.setUser(user);
+        requestReply.setBoard(board);
+
+        replyRepository.save(requestReply);
+
     }
 }
