@@ -1,12 +1,9 @@
 package com.jcw.blog.repository;
 
-import com.jcw.blog.dto.ReplySaveRequestDto;
 import com.jcw.blog.model.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
-import javax.transaction.Transactional;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 

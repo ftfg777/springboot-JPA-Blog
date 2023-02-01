@@ -34,7 +34,7 @@ public class Board {
 
     @JsonIgnoreProperties({"board"})
     @OrderBy("id desc")
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) //mappedBy 연관관계의 주인이 아니다 (난 FK가 아님) DB에 칼럼을 만들지 마 EAGER = 한 번에 데이터 가져오기
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) //mappedBy 연관관계의 주인이 아니다 (난 FK가 아님) DB에 칼럼을 만들지 마 EAGER = 한 번에 데이터 가져오기 REMOVE = 댓글도 함께 삭제됨
     private List<Reply> replys;
 
     @CreationTimestamp      // insert 혹은 update 시간 자동 저장
