@@ -75,24 +75,23 @@ let index = {
     },
 
     replySave: function () {
-        let boardId = $("#id").text();
 
         let data = {
+            userId: $("#userId").val(),
+            boardId: $("#id").text(),
             content: $("#reply-content").val()
         };
 
-        console.log(data, boardId);
-
         $.ajax({
             type: "POST",
-            url: `/api/board/${boardId}/reply`,
+            url: `/api/board/${data.boardId}/reply`,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         }).done(function (resp) {
             alert("댓글작성이 완료되었습니다.");
             console.log(resp);
-            location.href = `/board/${boardId}`;
+            location.href = `/board/${data.boardId}`;
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });

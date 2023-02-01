@@ -1,6 +1,7 @@
 package com.jcw.blog.controller.api;
 
 import com.jcw.blog.auth.PrincipalDetail;
+import com.jcw.blog.dto.ReplySaveRequestDto;
 import com.jcw.blog.dto.ResponseDto;
 import com.jcw.blog.model.Board;
 import com.jcw.blog.model.Reply;
@@ -51,15 +52,14 @@ public class BoardApiController {
         return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
     }
 
+    // 데이터를 받을 때 컨트롤러에서 dto를 만들어서 받는게 좋다.
+    // 이 프로젝트에서 dto 사용하지 않은 이유는 규모가 작기 때문에
     @PostMapping("/api/board/{boardId}/reply")
-    public ResponseDto<Integer> replySave(@PathVariable Long boardId,
-                                          @RequestBody Reply reply,
-                                          @AuthenticationPrincipal PrincipalDetail principal){
+    public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto){
         System.out.println("BoardApiController replySave 호출");
 
-        boardService.댓글작성(principal.getUser(), boardId, reply);
+        boardService.댓글작성(replySaveRequestDto);
 
-        System.out.println(reply.getContent());
         System.out.println("BoardApiController replySave 끝");
         return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
     }
