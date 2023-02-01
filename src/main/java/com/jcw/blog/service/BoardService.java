@@ -77,18 +77,19 @@ public class BoardService {
 
     @Transactional
     public void 댓글작성(ReplySaveRequestDto dto) {
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("댓글 작성 실패 : 작성자 ID를 찾을 수 없습니다."));
-
-        Board board = boardRepository.findById(dto.getBoardId())
-                .orElseThrow(() -> new IllegalStateException("댓글 작성 실패 : 게시글 ID를 찾을 수 없습니다"));
-
-        Reply reply = Reply.builder()
-                .user(user)
-                .board(board)
-                .content(dto.getContent())
-                .build();
-
-        replyRepository.save(reply);
+//        User user = userRepository.findById(dto.getUserId())
+//                .orElseThrow(() -> new IllegalArgumentException("댓글 작성 실패 : 작성자 ID를 찾을 수 없습니다."));
+//
+//        Board board = boardRepository.findById(dto.getBoardId())
+//                .orElseThrow(() -> new IllegalStateException("댓글 작성 실패 : 게시글 ID를 찾을 수 없습니다"));
+//
+//        Reply reply = Reply.builder()
+//                .user(user)
+//                .board(board)
+//                .content(dto.getContent())
+//                .build();
+//
+//        replyRepository.save(reply);
+        replyRepository.mSave(dto.getUserId(), dto.getBoardId(), dto.getContent());
     }
 }
