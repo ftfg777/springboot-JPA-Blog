@@ -64,5 +64,14 @@ public class BoardApiController {
         return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
     }
 
+    @DeleteMapping("/api/board/{boardId}/reply/{replyId}")
+    public ResponseDto<Integer> replyDelete(@PathVariable Long replyId, @AuthenticationPrincipal PrincipalDetail principal){
+        System.out.println("BoardApiController replyDelete 호출");
+
+        boardService.댓글삭제(replyId, principal.getUser());
+
+        System.out.println("BoardApiController replyDelete 끝");
+        return new ResponseDto<>(HttpStatus.OK.value(), HttpStatus.OK, 1);
+    }
 
 }

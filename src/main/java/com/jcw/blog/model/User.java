@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 
@@ -21,12 +23,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //프로젝트에서 연결된 DB의 넘버링 전략을 따라감
     private Long id; //시퀀스, auto_increment
 
+    @NotBlank(message="NAME_IS_MANDATORY")
     @Column(nullable = false, length = 100, unique = true)
     private String username;
 
+    @NotBlank(message="PASSWORD_IS_MANDATORY")
     @Column(nullable = false)
     private String password;
 
+    @Email(message = "NOT_VALID_EMAIL")
     @Column(nullable = false)
     private String emailAddress;
 

@@ -68,7 +68,7 @@ let index = {
         }).done(function (resp) {
             alert("글수정이 완료되었습니다.");
             console.log(resp);
-            location.href = "/";
+            location.href = `/board/${id}`;
         }).fail(function (error) {
             alert(error);
         });
@@ -95,7 +95,23 @@ let index = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
-    }
+    },
+
+    replyDelete: function (boardId, replyId) {
+        $.ajax({
+            type: "DELETE",
+            url: `/api/board/${boardId}/reply/${replyId}`,
+            dataType: "json"
+        }).done(function (resp) {
+            alert("댓글 삭제가 완료되었습니다.");
+            console.log(resp);
+            location.href = `/board/${boardId}`;
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    },
+
+
 }
 
 

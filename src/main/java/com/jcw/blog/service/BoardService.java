@@ -92,4 +92,15 @@ public class BoardService {
 //        replyRepository.save(reply);
         replyRepository.mSave(dto.getUserId(), dto.getBoardId(), dto.getContent());
     }
+
+    @Transactional
+    public void 댓글삭제(Long replyId, User user) {
+        Reply reply = replyRepository.findById(replyId)
+                .orElseThrow(()-> new IllegalArgumentException("댓글 삭제 실패 : 해당 댓글을 찾을 수 없습니다."));
+
+        if(!reply.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("댓글 삭제 실패 : 해당 댓글을 삭제할 권한이 없습니다.");
+        }
+        replyRepository.deleteById(replyId);
+    }
 }

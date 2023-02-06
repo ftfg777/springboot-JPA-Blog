@@ -35,13 +35,15 @@
       <br>
       <div class="card">
         <div class="card-header">댓글리스트 (${board.replys.size()})</div>
-        <ul id="reply--box" class="list-group">
-          <c:forEach var="replys" items="${board.replys}">
-            <li id="reply--1" class="list-group-item d-flex justify-content-between">
-              <div>${replys.content}</div>
+        <ul id="reply-box" class="list-group">
+          <c:forEach var="reply" items="${board.replys}">
+            <li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between">
+              <div>${reply.content}</div>
               <div class="d-flex">
-                <div class="font-italic">${replys.user.username} &nbsp;</div>
-                <button type="button" class="btn btn-danger badge">삭제</button>
+                <div class="font-italic">${reply.user.username} &nbsp;</div>
+                <c:if test="${reply.user.id == principal.user.id}">
+                  <button onclick="index.replyDelete(${board.id}, ${reply.id})" class="btn btn-danger badge">삭제</button>
+                </c:if>
               </div>
             </li>
           </c:forEach>

@@ -19,6 +19,8 @@
         <img src="/image/kakao_login_btn.png" height="38px"/>
       </a>
     </form>
+
+    <p style="margin-top: 1rem;">회원이 아니신가요?&nbsp;<a href="/auth/joinForm">가입하기</a></p>
     
 
 </div>

@@ -17,8 +17,12 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-		<!-- 시큐리티 태그 라이브러리 시작 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 
+		<!-- 시큐리티 태그 라이브러리 시작 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
