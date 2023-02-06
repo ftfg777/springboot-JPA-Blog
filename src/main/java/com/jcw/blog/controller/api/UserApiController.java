@@ -1,6 +1,7 @@
 package com.jcw.blog.controller.api;
 
 import com.jcw.blog.auth.PrincipalDetail;
+import com.jcw.blog.dto.JoinValidatorDto;
 import com.jcw.blog.dto.ResponseDto;
 import com.jcw.blog.model.User;
 import com.jcw.blog.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -28,7 +32,12 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/auth/joinProc")
-    public ResponseDto<Integer> save(@Validated @RequestBody User user){
+    public ResponseDto<?> save(@Valid @RequestBody User user, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, 0);
+        }
+
         System.out.println("UserApiController save 호출");
 
         userService.회원가입(user);
@@ -57,7 +66,10 @@ public class UserApiController {
 
     }
 
-
+    @PostMapping("/api/user/check")
+    public boolean check(@RequestBody String username){
+        return userService.아이디중복체크(username);
+    }
 
 
 }

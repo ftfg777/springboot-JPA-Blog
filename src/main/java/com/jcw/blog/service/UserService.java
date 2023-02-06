@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true) //select 할 때 트랜잭션 시작, 서비스 종료시에 트랜잭션 종료(정합성 유지)
@@ -46,5 +48,11 @@ public class UserService {
 
     public User 회원찾기(String username) {
         return userRepository.findByUsername(username).orElseGet(User::new);
+    }
+
+
+    public Boolean 아이디중복체크(String username) {
+        User user = userRepository.findByUsername(username).orElseGet(User::new);
+        return user.getUsername() == null || user.getUsername().length() == 0;
     }
 }

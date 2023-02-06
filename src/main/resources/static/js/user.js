@@ -31,8 +31,8 @@ let index = {
                 location.href = "/";
             }
         }).fail(function (error) {
-            alert(JSON.stringify(error));
-        }); //ajax 통신을 이용해서 3개의 데이터를 json을 변경하여 insert 요청
+            alert(error.errorMessage);
+        });
     },
     update: function () {
         let data = {
