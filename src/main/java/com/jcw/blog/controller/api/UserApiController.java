@@ -15,10 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,12 +29,7 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/auth/joinProc")
-    public ResponseDto<?> save(@Valid @RequestBody User user, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            System.out.println(bindingResult.getAllErrors());
-            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, 0);
-        }
-
+    public ResponseDto<Integer> save(@RequestBody @Valid User user){
         System.out.println("UserApiController save 호출");
 
         userService.회원가입(user);
@@ -66,9 +58,15 @@ public class UserApiController {
 
     }
 
+    @GetMapping("/api/user/{id}")
+    public User getOneUser(@PathVariable Long id){
+        System.out.println("getOneUser id = " + id);
+         return userService.회원검색(id);
+    }
+
     @PostMapping("/api/user/check")
-    public boolean check(@RequestBody String username){
-        return userService.아이디중복체크(username);
+    public boolean idCheck(@RequestBody String username){
+        return userService.아이디체크(username);
     }
 
 

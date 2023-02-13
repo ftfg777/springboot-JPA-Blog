@@ -50,12 +50,16 @@
             }else{
               usernameMsg.classList.remove('green');
               usernameMsg.classList.add('red');
-              usernameMsg.innerHTML = "이미 사용중인 아이디입니다";
+              usernameMsg.innerHTML = "사용할 수 없는 아이디입니다";
             }
             
             console.log(resp);
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            alert(errorMap);
+            for (var [key, value] of errorMap) {
+              console.log('key : ' + key);
+              console.log('value : ' + value);
+            }
         });
   });
 </script>

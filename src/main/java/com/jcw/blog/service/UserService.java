@@ -51,8 +51,16 @@ public class UserService {
     }
 
 
-    public Boolean 아이디중복체크(String username) {
+    public Boolean 아이디체크(String username) {
+        if (username.length() <= 2){
+            return false;
+        }
         User user = userRepository.findByUsername(username).orElseGet(User::new);
         return user.getUsername() == null || user.getUsername().length() == 0;
+    }
+
+    public User 회원검색(Long id) {
+        System.out.println("회원검색 id" + id);
+        return userRepository.findById(id).orElseThrow(()->new IllegalStateException("Not found id : " + id));
     }
 }

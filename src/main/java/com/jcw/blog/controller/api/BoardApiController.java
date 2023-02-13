@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class BoardApiController {
     private final BoardService boardService;
 
+    @GetMapping("/api/board/{id}")
+    public Board getOneId(@PathVariable Long id){
+        return boardService.글상세보기(id);
+    }
+
     @PostMapping("/api/board")
     public ResponseDto<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal){
         System.out.println("BoardApiController save 호출");

@@ -1,4 +1,4 @@
-package com.jcw.blog.handler;
+package com.jcw.blog.advice.handler;
 
 import com.jcw.blog.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
@@ -16,23 +16,24 @@ import java.util.Map;
 @RestController
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = Exception.class)
-    public ResponseDto<String> handleArgumentException(Exception e){
-        return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler({IllegalStateException.class, IllegalArgumentException.class})
+    public String hendleValidationIllegalAccessException(Exception ex){
+        return ex.getMessage();
     }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errorsMap = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-            System.out.println(errors);
+            errorsMap.put(fieldName, errorMessage);
+            System.out.println(errorsMap);
         });
-        return errors;
+        return errorsMap;
     }
 
 
