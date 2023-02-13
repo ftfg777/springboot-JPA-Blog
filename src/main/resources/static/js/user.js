@@ -12,11 +12,18 @@ let index = {
         // });
     },
     save: function () {
+        let usernameMsg = document.querySelector("#usernameMsg");
+        let passwordMsg = document.querySelector("#passwordMsg");
+        let emailAddressMsg = document.querySelector("#emailAddressMsg");
+
         let data = {
             username: $("#username").val(),
             password: $("#password").val(),
             emailAddress: $("#emailAddress").val()
         };
+        data.username.length == 0 ? usernameMsg.classList.add('red') : "";
+        data.password.length == 0 ? passwordMsg.classList.add('red') : "";
+
         $.ajax({
             type: "POST",
             url: "/auth/joinProc",
@@ -31,12 +38,13 @@ let index = {
                 location.href = "/";
             }
         }).fail(function (error) {
-            alert(error);
-            let mapObject = new Map(error);
-            for (var [key, value] of mapObject) {
-                console.log('key : ' + key);
-                console.log('value : ' + value);
-            }
+            console.log(JSON.stringify(error));
+            console.log(error.responseJSON);
+            console.log(error.responseJSON.password);
+
+            (error.responseJSON.username != null ? usernameMsg.innerHTML = error.responseJSON.username : "");
+            (error.responseJSON.password != null ? passwordMsg.innerHTML = error.responseJSON.password : "");
+            (error.responseJSON.emailAddress != null ? emailAddressMsg.innerHTML = error.responseJSON.emailAddress : "");
         });
     },
     update: function () {

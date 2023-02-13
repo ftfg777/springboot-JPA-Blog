@@ -22,17 +22,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //프로젝트에서 연결된 DB의 넘버링 전략을 따라감
     private Long id; //시퀀스, auto_increment
 
-    @NotBlank(message="필수 입력입니다.")
-    @Size(min = 2, message = "2글자 이상 입력해야 합니다.")
+    @NotBlank(message="아이디를 입력해주세요.")
+    @Size(min = 2, message = "2글자 이상 입력해주세요.")
     @Column(nullable = false, length = 100, unique = true)
     private String username;
 
-    @NotBlank(message="필수 입력입니다.")
-    @Size(min = 8, message = "8글자 이상 입력해야 합니다.")
+    @NotBlank(message="비밀번호를 입력해주세요.")
+    @Size(min = 8, message = "8글자 이상 입력해주세요.")
     @Column(nullable = false)
     private String password;
 
-    @Email(message = "이메일 형식이 아닙니다.")
+    @Email(message = "올바른 이메일 형식이 아닙니다.")
     @Column(nullable = false)
     private String emailAddress;
 
