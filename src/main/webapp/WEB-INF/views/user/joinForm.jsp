@@ -32,6 +32,8 @@
     let usernameMsg = document.querySelector("#usernameMsg");
     let passwordMsg = document.querySelector("#passwordMsg");
     let emailAddressMsg = document.querySelector("#emailAddressMsg");
+    
+    
 
   $("#username").blur(function(){
     let username = $("#username").val();
@@ -53,13 +55,12 @@
             }
             console.log(resp);
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            console.log(JSON.stringify(error));
         });
   });
 
   $("#password").blur(function(){
     let password = $("#password").val();
-    
     if(password.length < 8){
       passwordMsg.classList.remove('green');
       passwordMsg.classList.add('red');
@@ -74,7 +75,6 @@
   $("#emailAddress").blur(function(){
     let emailAddress = $("#emailAddress").val();
     let checkEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-    
     if(!checkEmail.test(emailAddress)){
       emailAddressMsg.classList.remove('green');
       emailAddressMsg.classList.add('red');
