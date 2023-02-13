@@ -23,7 +23,7 @@
       </div>
     </form>
 
-    <button id="btn-save" class="btn btn-primary">회원가입</button>
+    <button id="btn-save" class="btn btn-primary" onclick="check()">회원가입</button>
 
 </div>
 
@@ -52,16 +52,16 @@
               usernameMsg.classList.add('red');
               usernameMsg.innerHTML = "사용할 수 없는 아이디입니다";
             }
-            
             console.log(resp);
         }).fail(function (error) {
-            alert(errorMap);
-            for (var [key, value] of errorMap) {
-              console.log('key : ' + key);
-              console.log('value : ' + value);
-            }
+            alert(JSON.stringify(error));
         });
   });
+
+  function check(){
+    alert("아니");
+  }
+
 </script>
 <%@ include file="../layout/footer.jsp" %>
 

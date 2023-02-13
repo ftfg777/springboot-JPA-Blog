@@ -31,7 +31,12 @@ let index = {
                 location.href = "/";
             }
         }).fail(function (error) {
-            alert(error.errorMessage);
+            alert(error);
+            let mapObject = new Map(error);
+            for (var [key, value] of mapObject) {
+                console.log('key : ' + key);
+                console.log('value : ' + value);
+            }
         });
     },
     update: function () {
