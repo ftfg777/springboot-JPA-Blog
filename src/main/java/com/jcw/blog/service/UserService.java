@@ -3,12 +3,10 @@ package com.jcw.blog.service;
 import com.jcw.blog.model.User;
 import com.jcw.blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true) //select 할 때 트랜잭션 시작, 서비스 종료시에 트랜잭션 종료(정합성 유지)
@@ -61,6 +59,6 @@ public class UserService {
 
     public User 회원검색(Long id) {
         System.out.println("회원검색 id" + id);
-        return userRepository.findById(id).orElseThrow(()->new IllegalStateException("Not found id : " + id));
+        return userRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("Not found id : " + id));
     }
 }

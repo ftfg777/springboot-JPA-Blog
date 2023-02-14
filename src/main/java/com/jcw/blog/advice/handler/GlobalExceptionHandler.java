@@ -1,6 +1,7 @@
 package com.jcw.blog.advice.handler;
 
 import com.jcw.blog.dto.ResponseDto;
+import com.jcw.blog.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,7 +23,6 @@ public class GlobalExceptionHandler {
         return ex.getMessage();
     }
 
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -36,7 +36,14 @@ public class GlobalExceptionHandler {
         return errorsMap;
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(UserNotFoundException.class)
+    public Map<String, String> handleBusinessExceptions(UserNotFoundException ex) {
+        Map<String, String> errorsMap = new HashMap<>();
+        errorsMap.put("errorMessage", ex.getMessage());
 
+        return errorsMap;
+    }
 
 
 

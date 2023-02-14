@@ -3,6 +3,7 @@ package com.jcw.blog.controller.api;
 import com.jcw.blog.auth.PrincipalDetail;
 import com.jcw.blog.dto.JoinValidatorDto;
 import com.jcw.blog.dto.ResponseDto;
+import com.jcw.blog.exception.UserNotFoundException;
 import com.jcw.blog.model.User;
 import com.jcw.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
