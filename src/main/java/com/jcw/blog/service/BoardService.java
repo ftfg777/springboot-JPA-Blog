@@ -2,6 +2,7 @@ package com.jcw.blog.service;
 
 import com.jcw.blog.auth.PrincipalDetail;
 import com.jcw.blog.dto.ReplySaveRequestDto;
+import com.jcw.blog.exception.UserNotFoundException;
 import com.jcw.blog.model.Board;
 import com.jcw.blog.model.Reply;
 import com.jcw.blog.model.User;
@@ -9,6 +10,7 @@ import com.jcw.blog.repository.BoardRepository;
 import com.jcw.blog.repository.ReplyRepository;
 import com.jcw.blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 @RequiredArgsConstructor
+@Slf4j
 @Transactional(readOnly = true) //select 할 때 트랜잭션 시작, 서비스 종료시에 트랜잭셩 종료(정합성 유지)
 @Service
 public class BoardService {
@@ -28,6 +31,11 @@ public class BoardService {
     @Transactional
     public void 글작성(Board board, User user) {
         System.out.println("BoardService.글작성 호출");
+        if (user == null || board == null){
+            log.error("UserService.글작성.board :" + board);
+            log.error("UserService.글작성.user :" + user);
+            throw new IllegalArgumentException("글 작성이 실패했습니다.");
+        }
 
         board.setCount(0);
         board.setUser(user);
@@ -44,7 +52,7 @@ public class BoardService {
 
     public Board 글상세보기(Long id) {
         return boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을 수 없습니다"));
+                .orElseThrow(() -> new IllegalArgumentException("글 상세보기 실패 : 해당 게시글 id를 찾을 수 없습니다"));
     }
 
     @Transactional

@@ -17,6 +17,11 @@ public class UserService {
 
     @Transactional
     public void 회원가입(User user){
+        if(user.getUsername().equals("") || user.getUsername().length() == 0 ||
+                user.getPassword().equals("") || user.getPassword().length() == 0){
+            throw new IllegalStateException("Invalid username or password");
+        }
+
         System.out.println("UserService.회원가입 시작");
         String rawPassword = user.getPassword(); //원문
         String encPassword = passwordEncoder.encode(rawPassword); //해쉬
